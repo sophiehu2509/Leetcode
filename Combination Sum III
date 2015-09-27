@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> res;
+        vector<int> vec;
+        sum(vec, 1, n, res, k);
+        return res;
+    }
+    
+    void sum (vector<int> &vec ,int start, int n, vector<vector<int>> &res, int k){
+        vector<int> candidates;
+        if(n<0 || vec.size()>k-1) return;
+        for (int i=start;i<10;i++){
+            if(n-i<0) break;
+            if (n==i && vec.size()==k-1){
+                vec.push_back(n);
+                res.push_back(vec);
+                vec.pop_back();
+                return; 
+            }
+            vec.push_back(i);
+            sum(vec, i+1, n-i,res,k);
+            vec.pop_back();
+        }
+    }
+};
+
+// start see as real number
