@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+    if (nums.size()==0) return 0;
+    if (nums.size()==1) return nums[0];
+    if (nums.size()==2) return max(nums[0],nums[1]);
+    if (nums.size()==3) return max(nums[1], max(nums[0],nums[2]));
+    
+    
+    int n=nums.size();
+    
+    int odd[n];
+    int even[n];
+    
+    int max1,max2;
+    
+    odd[0]=nums[0];
+    odd[1]=nums[1];
+    odd[2]=nums[2]+nums[0];
+    
+    even[0]=nums[n-1];
+    even[1]=nums[n-1]+nums[1];
+    even[2] = max(nums[0], nums[n-1]) + nums[2];
+    for (int i=3;i<=n-2;i++){
+        odd[i]=nums[i]+ max(odd[i-2],odd[i-3]);
+        //std::cout << i << "   " << odd[i] << '\n' ;
+    }
+    odd[n-2]=max(odd[n-3],odd[n-2]);
+    
+    for (int i=3;i<=n-3;i++){
+        even[i]=nums[i]+ max(even[i-2],even[i-3]);
+        //std::cout << i << "    " << even[i] << '\n' ;
+    }
+    even[n-3]=max(even[n-3],even[n-4]);
+    
+    return max(odd[n-2], even[n-3]);
+}
+};
