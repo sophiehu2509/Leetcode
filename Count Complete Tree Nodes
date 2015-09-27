@@ -1,0 +1,28 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        if (root==NULL) return 0;
+        TreeNode* r=root;
+        TreeNode* l=root;
+        int hr=0, hl=0;
+        while (l){
+            hl++;
+            l=l->left;
+        }
+        while (r){
+            hr++;
+            r=r->right;
+        }
+        if (hr==hl ) return pow(2, hr)-1;
+        return 1+countNodes(root->right)+countNodes(root->left);
+    }
+};
