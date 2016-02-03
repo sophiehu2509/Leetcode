@@ -1,0 +1,32 @@
+public class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+       if (nums2.length==0) return; 
+                     
+        int i=m-1;
+        int j=n-1;
+        int z=0;
+        for (z=n+m-1; z>=0; z--)
+        {
+            if (j==-1) break;
+            
+            if (i==-1 || nums2[j]>=nums1[i])
+            {
+                nums1[z]=nums2[j];
+                j--;
+            }
+            else if (nums2[j]<nums1[i])
+            {
+                nums1[z]=nums1[i];
+               i--;
+            }
+           else if (nums2[j]==nums1[i])
+            {
+                nums1[z]=nums1[i];
+                z--;
+                nums1[z]=nums2[j];
+                i--;
+                j--;
+            }
+        } 
+    }
+}
