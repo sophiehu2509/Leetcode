@@ -1,0 +1,36 @@
+vector<int> searchRange(vector<int>& nums, int target) {
+        
+        vector<int> res(2,-1);
+        int start=0;
+        int end=nums.size()-1;
+        int mid=0;
+        //left position
+        while (start<end)
+        {
+            
+            mid=(end+start)/2;
+            if (nums[mid]>=target)
+               end=mid;
+            else
+                 start=mid+1;
+            
+        }
+        if (nums[start]!=target) return {-1,-1};
+        res[0]=start;
+        
+        end=nums.size()-1;
+        
+        //right position
+         while (start<end)
+        {
+            mid=(end+start)/2+1;
+            
+            if (nums[mid]<=target)
+               start=mid;
+            else
+                end=mid-1; 
+        }
+        res[1]=start;
+        
+        return res;
+    }
