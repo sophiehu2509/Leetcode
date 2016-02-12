@@ -1,0 +1,30 @@
+class Solution {
+public:
+   
+   vector<vector<int>> subsetsWithDup(vector<int>& nums) 
+   {
+       sort(nums.begin(),nums.end());
+       vector<int> vec;
+       vector<vector<int>> res;
+       res.push_back(vec);
+       dfs(nums, vec, res, 0);
+       return res;
+       
+       
+       
+   }
+   void dfs(vector<int>& nums, vector<int> &vec,  vector<vector<int>> &res, int pos)
+   {
+       if (pos>=nums.size()) return;
+       for (int j=pos;j<nums.size();j++)
+       {
+           if (nums[j]==nums[j-1] && j!=pos) continue;
+           vec.push_back(nums[j]);
+           res.push_back(vec);
+          dfs(nums, vec, res, j+1);
+          vec.pop_back();
+       }
+       
+       
+   }
+   };
