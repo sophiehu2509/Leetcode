@@ -1,0 +1,41 @@
+vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<int> vec;
+        vector<vector<int>> res;
+        vector<bool> isvisited(nums.size(), false);
+        //sort(nums.begin(), nums.end());
+        map<int, int> hashmap;
+        for (int i=0;i<nums.size();i++)
+        {
+            if (hashmap.find(nums[i])==hashmap.end()) 
+            {
+                hashmap[nums[i]]=0;
+            }
+            else
+            {
+                 hashmap[nums[i]]++;
+            }
+        }
+        dfs(res, vec, nums,  hashmap, 0);
+        return res;
+    }
+    void dfs(vector<vector<int>>& res, vector<int>&  vec, vector<int>& nums, map<int, int> & hashmap, int pos)
+    {
+        if (pos==nums.size()){
+            res.push_back(vec);
+            return;
+        }
+
+        for (auto &p : hashmap)
+        {
+            if (p.second >=0)
+            {
+                
+                p.second--;
+                vec.push_back(p.first);
+                dfs(res, vec, nums,  hashmap, pos+1);
+                p.second++;
+                vec.pop_back();
+                
+            }
+        }
+    }
