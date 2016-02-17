@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void reverseWords(string &s) {
+        string res="";
+        
+        reverse (s, 0, res);
+
+        s=res;
+    }
+    
+    void reverse (string &s, int start, string & res)
+    {
+         while(s[start]==' ' && start<s.length())
+        {
+            start++;
+        }
+
+        if (start>=s.length()) 
+        {
+            if( res.length()>0)
+                res.pop_back();
+      
+             return;
+            
+        }
+
+        int pos=start;
+        while (s[pos]!=' ' && pos<s.length())
+        {
+            pos++;
+        }
+       
+         res=(s.substr(start, pos-start)+" ")+res; 
+   
+         reverse (s, pos, res);
+        
+    }
+};
