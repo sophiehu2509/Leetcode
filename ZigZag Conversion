@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string convert(string s, int numRows)
+    {
+        string res;
+        int len=s.length();
+         int index=0;
+        if(len<=numRows || numRows==1) return s;
+          for (int i=0;i<numRows;i++)
+          {
+              //res=res+s[i];
+           
+             for (int j=0, index=i; index<len; j++, index=(2*numRows-2)*j +i)
+            {
+                res=res+s[index];
+                if(i==0 || i==numRows-1)
+                {
+                    continue;
+                }
+                else {
+                   if (index+(numRows- i-1)*2 < len)
+                        res=res+s[index+(numRows- i-1)*2];
+                }
+            }
+          }
+        return res;
+    }
