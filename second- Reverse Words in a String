@@ -1,0 +1,33 @@
+class Solution {
+public:
+
+    void reverseWords(string &s) {
+        string res;
+        reverse(s, 0, res);
+        s=res;
+    }
+
+    void reverse(string &s, int start, string &res)
+    {
+        int len=s.length();
+        while (s[start]==' ' && start<len)
+            start++;
+        
+        if (start>=len)
+        {
+            if (res.length()>0)
+                res.pop_back();
+            
+            return;
+        }
+
+        int end=start;
+        while (s[end]!=' ' && end<len)
+        {
+            end++;
+        }
+        
+        res=s.substr(start, end-start)+" "+res;
+        reverse(s, end, res);
+    }
+};
