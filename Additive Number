@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool isAdditiveNumber(string num) {
+        int space=0;
+        int len=num.length();
+        int i=0;
+        int j=1;
+        for (i=1;i<=len/2;i++){
+            for (j=1;j<=(len-i)/2;j++)
+                if(check(num.substr(0,i), num.substr(i,j), num.substr(i+j))) return true;
+        }  
+        return false;
+    }
+    bool check(string num1, string num2, string sum)
+    {
+        if (num1.size()>1 && num1[0]=='0' || num2.size()>1 && num2[0]=='0') return false;
+        string ss=add(num1, num2);
+        if (ss==sum) return true;
+        if (ss.size()>=sum.size() || ss.compare(sum.substr(0, ss.size()))!=0) return false;
+        else return check (num2, ss, sum.substr(ss.size()));
+        
+    }
+    
+    string add(string num11, string num22)
+    {
+        string res;
+        int i=num11.length()-1;
+        int j=num22.length()-1;
+        int carry=0;
+        while(i>=0 || j>=0)
+        {
+            int sum=(i>=0? (num11[i--]-'0'): 0)+(j>=0? (num22[j--]-'0') :0)+carry;
+            carry=sum/10;
+            sum=sum%10;
+            res+=(sum+'0');
+        }
+        if (carry)
+            res.push_back(carry+'0');
+        reverse (res.begin(),res.end());
+        return res;
+    }
+    
+    
+    
+};
