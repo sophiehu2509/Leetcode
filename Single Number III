@@ -1,0 +1,29 @@
+vector<int> singleNumber(vector<int>& nums) {
+        int target=0;
+        for (int n:nums)
+        {
+            target^=n;
+        }
+        
+        int lowestbit=target& (-target);
+        
+        vector<int> vec;
+        int x=0;
+        int y=0;
+        
+        for (int n:nums)
+        {
+            if (lowestbit & n)
+            {
+                x=x ^ n;
+            }else
+            {
+                y=y ^ n;;
+            }
+        }
+        vec.push_back(x);
+        vec.push_back(y);
+        
+        return vec;
+        
+    }
