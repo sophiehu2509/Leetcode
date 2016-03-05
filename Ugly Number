@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool isUgly(int num) {
+        if (num == 1) 
+            return true;
+         
+        if (num == 0) 
+            return false;
+         
+        if(num < 1)
+            return false;
+            
+        unordered_map <int, bool> hashmap;
+        
+        return check (hashmap, num);
+        
+    }
+    
+    bool check (unordered_map <int, bool> & hashmap, int num)
+    {
+        if (hashmap.find (num) != hashmap.end())
+            return hashmap[num];
+        
+        if (num == 1 || num == 0)
+            return true;
+ 
+        if (num%2 == 0)
+            return check( hashmap, num/2);
+        else if(num%3 == 0)
+            return check( hashmap, num/3);
+         else if(num%5 == 0)
+            return check( hashmap, num/5);
+        
+        return false;
+    }
+};
