@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        
+        vector <int> vec(n);
+        vec[0] = 1;
+        int i = 1;
+        int n2=0, n3=0, n5 = 0;
+        while (i<n){
+            vec[i] = min(min (2*vec[n2], 3*vec[n3]), 5*vec[n5]);
+            if (vec[i] == 2*vec[n2])
+                n2++;
+            if (vec[i] == 3*vec[n3])
+                n3++;
+            if (vec[i] == 5*vec[n5])
+                n5++;
+            ++i;
+        }
+        return vec[n-1];
+    }
+};
