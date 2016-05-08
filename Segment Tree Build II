@@ -1,0 +1,55 @@
+/**
+ * Definition of SegmentTreeNode:
+ * class SegmentTreeNode {
+ * public:
+ *     int start, end, max;
+ *     SegmentTreeNode *left, *right;
+ *     SegmentTreeNode(int start, int end, int max) {
+ *         this->start = start;
+ *         this->end = end;
+ *         this->max = max;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     *@param A: a list of integer
+     *@return: The root of Segment Tree
+     */
+    SegmentTreeNode * build(vector<int>& A) {
+        // write your code here
+        
+        return build_child(A, 0, A.size() - 1);
+       
+        
+    }
+    SegmentTreeNode * build_child (vector<int>& A, int i, int j)
+    {
+        if (i > j)
+            return NULL;
+            
+       
+            int mid = (i + j) /2;
+            int maxx = A[i];
+     
+        SegmentTreeNode * root = new SegmentTreeNode(i, j, maxx);
+        
+        if (i!= j)
+        {
+            for (int z = i; z<=j; z++)
+                maxx = max(maxx, A[z]);
+                
+            root->max = maxx;
+            root->left = build_child(A, i, mid);
+            root->right = build_child(A, mid + 1, j);
+        }else {
+            root -> max = A[i];
+           
+        }
+        
+        return root;
+    }
+    
+};
