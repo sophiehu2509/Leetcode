@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string reverseVowels(string s) {
+        int i = 0;
+        int j = s.size() - 1;
+        
+        unordered_set <char> pack;
+        pack.insert('o');
+        pack.insert('e');
+        pack.insert('i');
+        pack.insert('a');
+        pack.insert('u');
+        pack.insert('O');
+        pack.insert('E');
+        pack.insert('I');
+        pack.insert('A');
+        pack.insert('U');
+        
+        while (i < j)
+        {
+            if (pack.find(s[i]) == pack.end())
+                i++;
+      
+            if (pack.find(s[j]) == pack.end())
+                j--;
+                
+            if (pack.find(s[i]) != pack.end() && pack.find(s[j]) != pack.end())
+             {
+                char ch = s[i];
+                s[i] = s[j];
+                s[j] = ch;
+                i++;
+                j--;
+             }
+        }
+        return s;
+    }
+};
