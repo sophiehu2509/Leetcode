@@ -1,0 +1,51 @@
+class Solution {
+public:
+    vector<string> findItinerary(vector<pair<string, string>> tickets) {
+        vector <string> vec;
+        vector <string> res;
+        map<string, vector<pair<string, bool>>> edge;
+        
+        for (int i = 0; i<tickets.size(); i++)
+        {
+            if (edge.find(tickets[i].first) == edge.end())
+            {
+                edge[tickets[i].first].push_back(make_pair(tickets[i].second, false));
+               
+            }
+            else 
+            {
+                edge[tickets[i].first].push_back(make_pair(tickets[i].second, false));
+                sort(edge[tickets[i].first].begin(), edge[tickets[i].first].end());
+            }
+            
+        }
+           vec.push_back("JFK");
+           dfs(tickets, vec, edge, "JFK"); 
+
+        return vec;
+        
+    }
+    
+    bool dfs (vector<pair<string, string>>& tickets, vector <string> &vec, map<string, vector<pair<string, bool>>> &edge, string s){
+        
+        if (vec.size() == tickets.size() + 1)
+            return true;
+      
+       for (int i = 0; i< edge[s].size(); i++){
+           
+            if (!edge[s][i].second){
+             vec.push_back(edge[s][i].first);
+             edge[s][i].second= true;
+             
+             if (dfs(tickets, vec, edge, edge[s][i].first))
+                 return true;
+                
+            vec.pop_back();
+            edge[s][i].second= false;
+            }
+       }    
+        
+        return false;
+    }
+    
+};
