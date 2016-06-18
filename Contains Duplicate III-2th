@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
+        int i = 0;
+        int j = 0;
+        
+        set<int> window;
+        for (i, j; i<nums.size(); i++){
+            if (i > k)
+                window.erase(nums[i - k - 1]);
+            auto pos = window.lower_bound(nums[i] - t);
+            
+            if (pos != window.end() && *pos - nums[i] <= t)
+                return true;
+                
+            window.insert(nums[i]);
+            
+        }
+        
+        return false;
+    }
+};
