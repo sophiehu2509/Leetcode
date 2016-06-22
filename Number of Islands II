@@ -1,0 +1,53 @@
+class Solution {
+public:
+    vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
+        vector<int> parent (m*n, -1);
+    
+        vector<int> res;
+        int unit_x[4] = {-1, 1, 0, 0};
+        int unit_y[4] = {0, 0, 1, -1};
+        int count = 0;
+        
+        for (int i = 0; i<positions.size(); i++)
+        {
+            int x = positions[i].first;
+            int y = positions[i].second;
+            int pos = x * n + y;
+           
+            count ++;
+            parent[pos] = pos;
+            for (int j = 0; j<4; j++){
+                int re_x = positions[i].first + unit_x[j];
+                int re_y = positions[i].second + unit_y[j];
+                if (re_x >= 0 && re_x < m && re_y >= 0 && re_y < n && parent[re_x * n + re_y] != -1){
+                    int re_pos = re_x * n + re_y;
+                    int p1 = findparent(parent, re_pos);
+                    int p2 = parent[pos];
+                    
+                    if (p1 != p2)
+                        count --;
+
+                    parent[p1] = p2;
+
+                }
+            }
+             res.push_back(count);
+            
+        }
+        
+        return res;
+    }
+    
+    int findparent (vector<int>& parent, int val){
+        {
+            if (parent [val] == val)
+                return val;
+                
+            parent [val] = findparent (parent, parent[val]);
+            
+            return parent[val];
+            
+            
+        }
+    }
+};
