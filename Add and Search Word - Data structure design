@@ -1,0 +1,79 @@
+class TireNode {
+public:
+    bool isend = false;
+    TireNode *children[26];
+    TireNode () {
+        for (int i = 0; i<26; i++)
+            children[i] = NULL;
+    }
+};
+
+class WordDictionary {
+public:
+    TireNode * root = new TireNode();
+    // Adds a word into the data structure.
+    void addWord(string word) {
+        TireNode * node = root;
+        for (int i = 0; i<word.size(); i++){
+            if (node -> children[ word[i] - 'a'] == NULL)
+                node -> children[ word[i] - 'a'] = new TireNode();
+                
+            node = node -> children[ word[i] - 'a'];
+        }
+        node -> isend = true;
+    }
+
+    // Returns if the word is in the data structure. A word could
+    // contain the dot character '.' to represent any one letter.
+    bool search(string word) {
+       
+        return check (word, 0, root);
+        //return help(word, root);
+    }
+    
+    bool check (string word, int pos, TireNode * node){
+        if (node == NULL)
+            return false;
+        if(pos == word.length())
+            return node -> isend;
+        
+        for (int i = pos; i<word.size() && node; i++){
+            if (word[i] == '.'){
+                 for (int j = 0; j<26; j++){
+                    if (node -> children[j] && check (word, i + 1, node -> children[j])){
+                        cout << node -> children[j];
+                        return true;
+                    }
+                }
+                return false;
+            }
+           else{
+                node = node -> children[word[i] - 'a'];
+               
+           }
+                //return check (word, pos + 1, node -> children[word[pos] - 'a']);
+        }
+   
+        return node && node -> isend;
+    }
+    
+   /* bool help(string word, TireNode *cur) {
+     for (int i = 0; i < word.size() && cur; i++) {
+        if (word[i] == '.') {
+            string subword = word.substr(i + 1);
+            for (int j = 0; j < 26; j++) {
+                if (help(subword, cur->children[j])) return true;
+            }
+            return false;
+        } else {
+            cur = cur->children[word[i] - 'a'];
+        }
+    }
+    return cur && cur->isend;
+}*/
+};
+
+// Your WordDictionary object will be instantiated and called as such:
+// WordDictionary wordDictionary;
+// wordDictionary.addWord("word");
+// wordDictionary.search("pattern");
