@@ -1,0 +1,47 @@
+struct graph{
+    unordered_set<int> adj;
+    int degree;
+    graph():degree(0) {}
+    
+};
+
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+        
+        vector<bool> visited (numCourses, false);
+        queue<int> q;
+        vector<graph> g (numCourses, graph());
+        int count = 0;
+        
+        for (int i = 0; i<prerequisites.size(); i++){
+            
+        if (g[prerequisites[i].first].adj.find(prerequisites[i].second) == g[prerequisites[i].first].adj.end()){
+            g[prerequisites[i].first].adj.emplace(prerequisites[i].second);
+            g[prerequisites[i].second].degree++;
+        }
+            
+        }
+        
+        for (int i = 0; i<numCourses; i++){
+            if (g[i].degree == 0){
+                q.push(i);
+               
+               cout << i;
+            }
+        }
+        
+        while (!q.empty()){
+            int m = q.front();
+            q.pop();
+            count++;
+            for (int i:g[m].adj){
+                if (--g[i].degree == 0){
+                    q.push(i);
+                }
+            }
+            
+        }
+        return count == numCourses;
+    }
+};
