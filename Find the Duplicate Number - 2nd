@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int slow = 1;
+        int fast = nums.size();
+        while (slow < fast)
+        {
+            int mid = slow + (fast - slow)/2;
+            int count = 0;
+            for (auto num : nums)
+                if (num <= mid) 
+                    count ++;
+   
+            if (count > mid)
+                fast = mid;
+            if (count <= mid)
+                slow = mid +1 ;
+
+        }
+        
+        return slow;
+        
+    }
+};
