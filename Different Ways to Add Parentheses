@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int compute(int a, int b, char op){
+        int res = 0;
+         switch(op) {  
+            case '+': 
+                res= a + b; 
+                break;
+            case '-': 
+                res = a - b;  
+                break;
+            case '*': 
+                res=a * b;
+                break;
+         } 
+         cout << res;
+     return res;
+        
+    }
+
+    vector<int> diffWaysToCompute(string input) {
+        vector<int> res;
+        int num = 0;
+        int k = 0;
+        for (k; k<input.size() && isdigit(input[k]); k++)
+            num = num*10 + input[k] - '0';
+            
+       
+        if (k == input.size()){
+            res.push_back(num);
+            return res;
+        }
+        
+        for (int i = 0; i<input.size(); i++){
+            if (isdigit(input[i]))
+                continue;
+               
+            vector<int> left = diffWaysToCompute (input.substr(0, i));
+            vector<int> right = diffWaysToCompute (input.substr(i + 1, input.size() - i - 1));
+         
+            for (int j = 0; j<left.size(); j++){
+                for (int z = 0; z<right.size(); z++){
+                    
+                    res.push_back(compute(left[j], right[z], input[i]));
+                }
+            }
+        }
+        
+        return res;
+    }
+};
