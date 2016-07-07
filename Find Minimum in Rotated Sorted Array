@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int slow = 0;
+        int fast = nums.size() - 1;
+        int n = 0;
+        while (slow < fast){
+            int mid = slow + (fast - slow)/2;
+   
+            if (nums[mid] < nums[fast])
+                fast = mid;
+            if (nums[mid] > nums[fast])
+                 slow= mid + 1;
+            
+        }
+        
+       if (nums[slow] <= nums[fast])
+            return nums[slow];
+        else
+            return nums[fast];
+        
+        
+    }
+};
