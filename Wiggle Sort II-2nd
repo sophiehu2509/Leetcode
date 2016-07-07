@@ -1,0 +1,13 @@
+class Solution {
+public:
+    void wiggleSort(vector<int>& nums) {
+        
+        vector<int> vec (nums);
+        sort( vec.begin(),  vec.end());
+        int mid = nums.size()/2 + 1;
+        
+        for (int i = nums.size() - 1, k = i/2 + 1, j = 0;i >= 0; i--)
+            nums[i] = vec[i & 1? k ++: j++];
+        
+    }
+};
