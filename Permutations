@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+      vector<int> vec;
+      vector<vector<int>> res;
+      vector<int> visited(nums.size(), false);
+    
+      dfs(res, vec, nums, visited);
+      return res;
+    
+    }
+    
+    void dfs ( vector<vector<int>> &res, vector<int> &vec, vector<int>& nums, vector<int> &visited){
+        if (vec.size() == nums.size()){
+            res.push_back(vec);
+            return;
+        }
+        for (int i = 0; i<nums.size(); i ++){
+            if (visited[i] == true)
+                continue;
+            vec.push_back(nums[i]);
+            visited[i] = true;
+            dfs(res, vec, nums, visited);
+            vec.pop_back();
+            visited[i] = false;
+        }
+        
+        
+    }
+};
