@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, unordered_set<string>& wordList) {
+        int h = 2;
+        if (beginWord == endWord || beginWord.size() > endWord.size())
+            return 0;
+            
+        wordList.insert(endWord);   
+        //wordList.insert(beginWord);  
+        queue<string> add;
+        bfs(beginWord, wordList, add);
+        
+        while (!add.empty()){
+            int num = add.size();
+            for (int i = 0; i<num; i++){
+                string word = add.front();
+                add.pop();
+                
+                if (word == endWord)
+                    return h;
+                    
+                bfs(word, wordList, add);
+            }
+            
+            h ++;
+        }
+        return 0;
+    }
+    
+    void bfs(string beginWord, unordered_set<string>& wordList, queue<string>& add){
+        wordList.erase(beginWord);
+        
+         for (int i = 0; i<beginWord.size(); i++){
+             char word = beginWord[i];
+            for (int j = 0; j<26; j++){
+                beginWord[i] = 'a' + j;
+                if (wordList.find(beginWord) != wordList.end()){
+                       add.push(beginWord);
+                       wordList.erase(beginWord);
+                }
+ 
+            }
+            beginWord[i] = word;
+         }
+            
+            
+    }
+    
+    
+};
