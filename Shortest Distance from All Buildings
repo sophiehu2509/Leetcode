@@ -1,0 +1,65 @@
+class Solution {
+public:
+    int shortestDistance(vector<vector<int>>& grid) {
+        int row = grid.size();
+        int col = grid[0].size();
+        
+        vector<vector<int>> distance (row, vector<int>(col, 0));
+
+        vector<vector<int>> reached (row, vector<int>(col, 0));
+        
+        
+        int building = 0;
+        int dis = 0;
+        for (int i = 0; i< row; i++){
+            for (int j = 0; j<col; j++){
+                dis = 0;
+                if (grid[i][j] == 1){
+                    cout << i;
+                    cout << j;
+                    building ++;
+                    vector<vector<int>> visited (row, vector<int>(col, 0));
+                    queue <pair<int, int>> cur, next;
+                    cur.emplace(i, j);
+                   while (!cur.empty())  {
+                       dis ++;
+                       
+                    while (!cur.empty()){
+                        vector<pair<int, int>> dirs = {{0,1}, {0, -1}, {1, 0}, {-1, 0}};
+                        pair<int, int> point = cur.front();
+                        cur.pop();
+                        reached[point.first][point.second] ++;
+    
+                        for (auto c:dirs)
+                        {
+                            int x = point.first + c.first;
+                            int y = point.second + c.second;
+                            
+                            if (x>=0 && x<row && y>=0 && y<col && grid[x][y] == 0 && visited[x][y] == 0){
+                                distance[x][y] += dis;
+                                visited[x][y] = 1;
+                                next.emplace(x, y);
+
+                            }
+                        }
+                    }
+                    swap(cur, next);
+                   
+                    }
+                }
+                
+            }
+        }
+        
+    int res = INT_MAX;
+       for (int i = 0; i<row; i++){
+           for (int j = 0; j<col; j ++){
+               if (grid[i][j] == 0 && reached[i][j] == building){
+                    res = min(distance[i][j], res);
+                    cout << res;
+               }
+           }
+       } 
+        return res == INT_MAX? -1: res;
+    }
+};
