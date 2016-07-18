@@ -1,0 +1,43 @@
+class LRUCache{
+public:
+    LRUCache(int capacity) {
+        cap = capacity;
+    }
+    
+    int get(int key) {
+        if (cache.find(key) == cache.end())
+            return -1;
+        else {
+            int findKey = cache[key]->first;
+            int findValue = cache[key]->second;
+            lru.erase(cache[key]);
+            lru.push_front({findKey, findValue});
+            cache[key] = lru.begin();
+        }
+            return cache[key]->second;
+    }
+    
+    void set(int key, int value) {
+        pair <int, int> p = {key, value};
+        
+        if (cache.find(key) != cache.end()){
+            lru.erase(cache[key]);
+           
+            
+        }
+         else if (lru.size() == cap)
+        {
+           cache.erase(lru.back().first);
+           lru.pop_back();
+        }
+
+           lru.push_front(p);
+           cache[key] = lru.begin();
+
+    }
+public:    
+ typedef list <pair<int, int>> Lru;
+Lru lru;
+unordered_map<int, Lru::iterator> cache;
+int cap;
+};
